@@ -59,7 +59,7 @@ elif 18 <= i.hour <= 20:
     timeofday = 'in the evening.'
 
 if args.arena:
-    print "It is {0:02d}:{1:02d} {2}".format(int(h.strftime("%I")), i.minute, timeofday)
+    print "It is {0:01d}:{1:02d} {2}".format(int(h.strftime("%I")), i.minute, timeofday)
     print "The date is {0}, {1:01d}{2} of {3} in the year 7E {4}".format(esday[i.weekday()], i.day, suffix, esmonth[i.month], i.year) 
 elif args.daggerfall:
     print "It is {0:01d}:{1:02d} on {2} the {3:01d}{4} of {5}.".format(i.hour, i.minute, esday[i.weekday()], i.day, suffix, esmonth[i.month])
