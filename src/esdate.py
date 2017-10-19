@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import datetime
-import argparse
+import datetime, argparse           # Standard Library modules
 
+# This dict associates month digits to their names in Elder Scrolls
 esmonth = {1: "Morning Star",
            2: "Sun's Dawn",
            3: "First Seed",
@@ -16,6 +16,7 @@ esmonth = {1: "Morning Star",
            11: "Sun's Dusk",
            12: "Evening Star"}
 
+# This dict associates day-of-the-week digits to their Elder Scrolls names
 esday = {0: "Morndas",
          1: "Tirdas",
          2: "Middas",
@@ -24,6 +25,7 @@ esday = {0: "Morndas",
          5: "Loredas",
          6: "Sundas"}
 
+# Here, we create the various options a user can specify when launching the script.
 parser = argparse.ArgumentParser(description = "Displays the date using the Elder Scrolls calendar.  Using no arguments returns the date emulating the format of the traditional Unix 'date' command.")
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-a", "--arena", help = "Output emulates the Arena player status screen", action = "store_true")
@@ -31,13 +33,16 @@ group.add_argument("-d", "--daggerfall", help = "Output emulates the Daggerfall 
 group.add_argument("-m", "--morrowind", help = "Output emulates the Morrowind wait screen", action = "store_true")
 group.add_argument("-o", "--oblivion", help = "Output emulates the Oblivion wait screen", action = "store_true")
 group.add_argument("-s", "--skyrim", help = "Output emulates the Skyrim wait screen", action = "store_true")
+# Store the users choice (or lack thereof) into args
 args = parser.parse_args()
 
+# Get the current date and time
 i = datetime.datetime.now()
 
 # Setup the hour for 12-hour clock
 h = datetime.datetime.strptime(str(i.hour), "%H")
 
+# Determine the ordinal indicator for the current day
 if i.day in [1, 21, 31]:
     suffix = "st"
 elif i.day in [2, 22]:
@@ -47,6 +52,7 @@ elif i.day in [3, 23]:
 else:
     suffix = "th"
 
+# The Elder Scrolls: Arena includes one of the following phrases based on the current hour
 if 0 <= i.hour <= 2 or 21 <= i.hour <= 23:
     timeofday = 'at night.'
 elif 3 <= i.hour <= 5:
@@ -58,6 +64,7 @@ elif 12 <= i.hour <= 17:
 elif 18 <= i.hour <= 20:
     timeofday = 'in the evening.'
 
+# Print a formatted string based on the user's option choice (or lack thereof)
 if args.arena:
     print "It is {0:01d}:{1:02d} {2}".format(int(h.strftime("%I")), i.minute, timeofday)
     print "The date is {0}, {1:01d}{2} of {3} in the year 7E {4}".format(esday[i.weekday()], i.day, suffix, esmonth[i.month], i.year) 
